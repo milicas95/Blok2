@@ -94,9 +94,20 @@ namespace ClientApp
                         Console.WriteLine("================================================");
                         action = Convert.ToInt32(Console.ReadLine());
 
+                        string s;
                         switch (action)
                         {
                             case 0:
+                                continue;
+                            case 1:
+                                s = proxy.CreateDatabase(clientCertCN);
+                                if (s != "")
+                                    Console.WriteLine(s);
+                                continue;
+                            case 2:
+                                s = proxy.DeleteDatabase(clientCertCN);
+                                if (s != "")
+                                    Console.WriteLine(s);
                                 continue;
                             case 3:
                                 DBParam dbp = new DBParam();

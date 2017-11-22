@@ -185,7 +185,7 @@ namespace ServiceApp
                 try
                 {
 //                    Audit.ReadSuccess(path);        //ispis u Log fajl da je uspesno procitana (otvorena) datoteka
-
+                    
                     string[] lines = File.ReadAllLines(path);
 
                     List<DBParam> wantedReg = new List<DBParam>();
@@ -258,11 +258,12 @@ namespace ServiceApp
 
                 try
                 {
-
-                    using (StreamWriter sw = new StreamWriter(path, true))
+                    StreamWriter sw;
+                    using (sw = new StreamWriter(path, true))
                     {
                         sw.WriteLine(dbp.Id + "/" + dbp.Region + "/" + dbp.City + "/" + dbp.Year + "/" + dbp.Month + "/" + dbp.ElEnergySpent);
                     }
+                    sw.Close();
 
                     dbp.IDs.Add(dbp.Id);
                     //         Audit.AddSuccess();         //ispis u Log fajlu da je dodat podatak u datoteku
@@ -296,13 +297,13 @@ namespace ServiceApp
 
                 try
                 {
-                //                    Audit.ReadSuccess(database);        //ispis u Log fajl da je uspesno procitana (otvorena) datoteka
-                    
-                    using (StreamWriter sw = new StreamWriter(path))
+                    //                    Audit.ReadSuccess(database);        //ispis u Log fajl da je uspesno procitana (otvorena) datoteka
+                    StreamWriter sw;
+                    using ( sw = new StreamWriter(path))
                     {
                         sw.WriteLine(dbp.Id + "/" + dbp.Region + "/" + dbp.City + "/" + dbp.Year + "/" + dbp.Month + "/" + dbp.ElEnergySpent);
                     }
-
+                    sw.Close();
                     //       Audit.UpdateSuccess();
                  }
                  catch (Exception e)
@@ -322,7 +323,7 @@ namespace ServiceApp
             }
         }
 
-        public bool CreateDatabase(string userName)
+        public string CreateDatabase(string userName)
         {
             X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Admins");
 
@@ -335,31 +336,32 @@ namespace ServiceApp
                     // Create a file to write to.
                     try
                     {
-                        File.CreateText(path);
-                        Console.WriteLine("Successfuly created new database!");
-                        return true;
+                        var myFile=File.CreateText(path);
+                        myFile.Close();
+                        //Console.WriteLine("Successfuly created new database!");
+                        return "Successfuly created new database!";
                     }
                     catch (IOException e)
                     {
                         Console.WriteLine(e.Message);
-                        return false;
+                        return e.Message;
                     }
 
                 }
                 else
                 {
-                    Console.WriteLine("Database already exists");
-                    return false;
+                    //Console.WriteLine("Database already exists");
+                    return "Database already exists";
                 }
             }
             else
             {
-                Console.WriteLine("Certificate is invalid");
-                return false;
+                //Console.WriteLine("Certificate is invalid");
+                return "Certificate is invalid";
             }
         }
 
-        public bool DeleteDatabase(string userName)
+        public string DeleteDatabase(string userName)
         {
             X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Admins");
 
@@ -373,26 +375,26 @@ namespace ServiceApp
                     try
                     {
                         File.Delete(path);
-                        Console.WriteLine("Successfuly deleted database!");
-                        return true;
+                        //Console.WriteLine("Successfuly deleted database!");
+                        return "Successfuly deleted database!";
                     }
                     catch (IOException e)
                     {
-                        Console.WriteLine(e.Message);
-                        return false;
+                        //Console.WriteLine(e.Message);
+                        return e.Message;
                     }
 
                 }
                 else
                 {
-                    Console.WriteLine("Database already exists");
-                    return false;
+                    //Console.WriteLine("Database already exists");
+                    return "Database doesn't exists";
                 }
             }
             else
             {
-                Console.WriteLine("Certificate is invalid");
-                return false;
+                //Console.WriteLine("Certificate is invalid");
+                return "Certificate is invalid";
             }
         }
 
