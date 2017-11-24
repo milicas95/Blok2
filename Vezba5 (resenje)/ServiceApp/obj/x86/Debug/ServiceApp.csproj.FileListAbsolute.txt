@@ -22,3 +22,25 @@ C:\Users\Administrator.DOMAINADMINS0\Desktop\Blok2\Vezba5 (resenje)\ServiceApp\b
 C:\Users\Administrator.DOMAINADMINS0\Desktop\Blok2\Vezba5 (resenje)\ServiceApp\obj\x86\Debug\ServiceApp.csprojResolveAssemblyReference.cache
 C:\Users\Administrator.DOMAINADMINS0\Desktop\Vezba5 (resenje)\ServiceApp\obj\x86\Debug\ServiceApp.exe
 C:\Users\Administrator.DOMAINADMINS0\Desktop\Vezba5 (resenje)\ServiceApp\obj\x86\Debug\ServiceApp.pdb
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\ServiceApp\bin\Debug\ServiceApp.exe
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\ServiceApp\bin\Debug\ServiceApp.pdb
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\ServiceApp\bin\Debug\Contracts.dll
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\ServiceApp\bin\Debug\DBparam.dll
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\ServiceApp\bin\Debug\Manager.dll
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\ServiceApp\bin\Debug\Contracts.pdb
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\ServiceApp\bin\Debug\DBparam.pdb
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\ServiceApp\bin\Debug\Manager.pdb
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\ServiceApp\obj\x86\Debug\ServiceApp.csprojResolveAssemblyReference.cache
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\ServiceApp\obj\x86\Debug\ServiceApp.exe
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\ServiceApp\obj\x86\Debug\ServiceApp.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\ServiceApp\obj\x86\Debug\ServiceApp.exe
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\ServiceApp\obj\x86\Debug\ServiceApp.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\ServiceApp\bin\Debug\ServiceApp.exe
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\ServiceApp\bin\Debug\ServiceApp.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\ServiceApp\bin\Debug\Contracts.dll
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\ServiceApp\bin\Debug\DBparam.dll
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\ServiceApp\bin\Debug\Manager.dll
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\ServiceApp\bin\Debug\Contracts.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\ServiceApp\bin\Debug\DBparam.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\ServiceApp\bin\Debug\Manager.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\ServiceApp\obj\x86\Debug\ServiceApp.csprojResolveAssemblyReference.cache

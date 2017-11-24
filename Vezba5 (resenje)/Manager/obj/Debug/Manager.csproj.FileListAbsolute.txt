@@ -11,3 +11,16 @@ C:\Users\Administrator.DOMAINADMINS0\Desktop\Blok2\Vezba5 (resenje)\Manager\obj\
 C:\Users\Administrator.DOMAINADMINS0\Desktop\Blok2\Vezba5 (resenje)\Manager\obj\Debug\Manager.csproj.GenerateResource.Cache
 C:\Users\Administrator.DOMAINADMINS0\Desktop\Blok2\Vezba5 (resenje)\Manager\obj\Debug\Manager.dll
 C:\Users\Administrator.DOMAINADMINS0\Desktop\Blok2\Vezba5 (resenje)\Manager\obj\Debug\Manager.pdb
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\Manager\bin\Debug\Manager.dll
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\Manager\bin\Debug\Manager.pdb
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\Manager\obj\Debug\Manager.csprojResolveAssemblyReference.cache
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\Manager\obj\Debug\Manager.AuditEventsFile.resources
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\Manager\obj\Debug\Manager.csproj.GenerateResource.Cache
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\Manager\obj\Debug\Manager.dll
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\Manager\obj\Debug\Manager.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\Manager\bin\Debug\Manager.dll
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\Manager\bin\Debug\Manager.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\Manager\obj\Debug\Manager.AuditEventsFile.resources
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\Manager\obj\Debug\Manager.csproj.GenerateResource.Cache
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\Manager\obj\Debug\Manager.dll
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\Manager\obj\Debug\Manager.pdb

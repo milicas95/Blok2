@@ -7,3 +7,13 @@ C:\Users\Administrator.DOMAINADMINS0\Desktop\Blok2\Vezba5 (resenje)\DBparam\bin\
 C:\Users\Administrator.DOMAINADMINS0\Desktop\Blok2\Vezba5 (resenje)\DBparam\bin\Debug\DBparam.pdb
 C:\Users\Administrator.DOMAINADMINS0\Desktop\Blok2\Vezba5 (resenje)\DBparam\obj\Debug\DBparam.dll
 C:\Users\Administrator.DOMAINADMINS0\Desktop\Blok2\Vezba5 (resenje)\DBparam\obj\Debug\DBparam.pdb
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\DBparam\bin\Debug\DBparam.dll
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\DBparam\bin\Debug\DBparam.pdb
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\DBparam\obj\Debug\DBparam.csprojResolveAssemblyReference.cache
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\DBparam\obj\Debug\DBparam.dll
+C:\Users\Katarina\Desktop\Vezba5 (resenje) - Milicino zatvaranje datoteka\DBparam\obj\Debug\DBparam.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\DBparam\bin\Debug\DBparam.dll
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\DBparam\bin\Debug\DBparam.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\DBparam\obj\Debug\DBparam.csprojResolveAssemblyReference.cache
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\DBparam\obj\Debug\DBparam.dll
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\DBparam\obj\Debug\DBparam.pdb

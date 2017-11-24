@@ -264,8 +264,6 @@ namespace ServiceApp
                         sw.WriteLine(dbp.Id + "/" + dbp.Region + "/" + dbp.City + "/" + dbp.Year + "/" + dbp.Month + "/" + dbp.ElEnergySpent);
                     }
                     sw.Close();
-
-                    dbp.IDs.Add(dbp.Id);
                     //         Audit.AddSuccess();         //ispis u Log fajlu da je dodat podatak u datoteku
                 }
                 catch (Exception e)
@@ -298,14 +296,11 @@ namespace ServiceApp
                 try
                 {
                     //                    Audit.ReadSuccess(database);        //ispis u Log fajl da je uspesno procitana (otvorena) datoteka
-                    StreamWriter sw;
-                    using ( sw = new StreamWriter(path))
-                    {
-                        sw.WriteLine(dbp.Id + "/" + dbp.Region + "/" + dbp.City + "/" + dbp.Year + "/" + dbp.Month + "/" + dbp.ElEnergySpent);
-                    }
-                    sw.Close();
+                    string[] text = File.ReadAllLines(path);
+                    text[dbp.CNT] = dbp.Id + "/" + dbp.Region + "/" + dbp.City + "/" + dbp.Month + "/" + dbp.ElEnergySpent;
+                    File.WriteAllLines(path, text);
                     //       Audit.UpdateSuccess();
-                 }
+                }
                  catch (Exception e)
                  {
                  //              Audit.UpdateFailed("Exception was thrown");     //ispis u Log fajlu da korisnik nema pravo pisanja
