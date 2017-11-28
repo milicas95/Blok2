@@ -8,6 +8,10 @@ using System.ServiceModel.Security;
 using Manager;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
+using Manager.SecurityManager;
+using System.IdentityModel.Policy;
+using System.ServiceModel.Description;
+using System.Threading;
 
 namespace ServiceApp
 {
@@ -15,6 +19,17 @@ namespace ServiceApp
 	{
 		static void Main(string[] args)
 		{
+
+            NetTcpBinding bindingReplicator = new NetTcpBinding();
+            bindingReplicator.Security.Mode = SecurityMode.Transport;
+            bindingReplicator.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
+            bindingReplicator.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
+
+            WindowsIdentity wId = WindowsIdentity.GetCurrent();
+            Console.WriteLine(wId.Name.ToString());
+
+            string addressReplicator = "net.tcp://localhost:8888/SecurityService";
+
             /// srvCertCN.SubjectName should be set to the service's username. .NET WindowsIdentity class provides information about Windows user running the given process
             Console.ReadLine();
 			string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
@@ -36,15 +51,18 @@ namespace ServiceApp
             NetTcpBinding binding = new NetTcpBinding();
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
 
-			string address = "net.tcp://localhost:9999/Receiver";
+			string address = "net.tcp://localhost:9998/Receiver";
 			ServiceHost host = new ServiceHost(typeof(WCFService));
             host.AddServiceEndpoint(typeof(IDatabaseManagement), binding, address);
             host.AddServiceEndpoint(typeof(ISSLHandshake), binding, address);
 
-            ///PeerTrust - for development purposes only to temporarily disable the mechanism that checks the chain of trust for a certificate. 
-            ///To do this, set the CertificateValidationMode property to PeerTrust (PeerOrChainTrust) - specifies that the certificate can be self-issued (peer trust) 
-            ///To support that, the certificates created for the client and server in the personal certificates folder need to be copied in the Trusted people -> Certificates folder.
-            ///host.Credentials.ClientCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.PeerTrust;
+            host.Authorization.ServiceAuthorizationManager = new CustomAuthorizationManager();
+
+            List<IAuthorizationPolicy> policies = new List<IAuthorizationPolicy>();
+            policies.Add(new CustomAuthorizationPolicy());
+            host.Authorization.ExternalAuthorizationPolicies = policies.AsReadOnly();
+
+            host.Authorization.PrincipalPermissionMode = PrincipalPermissionMode.Custom;
 
             ///Custom validation mode enables creation of a custom validator - CustomCertificateValidator
             host.Credentials.ClientCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.Custom;
@@ -60,8 +78,24 @@ namespace ServiceApp
                 try
                 {
                     host.Open();
-                    Console.WriteLine("WCFService is started.\nPress <enter> to stop ...");
-                    Console.ReadLine();
+                    Console.WriteLine("WCFService is started ...");
+                    
+                    while (true)
+                    {
+                            try
+                            {
+                                using (WCFService proxy = new WCFService(bindingReplicator, addressReplicator))
+                                {
+                                    proxy.Replicate();
+                                    Thread.Sleep(2000);
+                                }
+                            }
+                            catch(Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                    } 
+                    
                 }
                 catch (Exception e)
                 {

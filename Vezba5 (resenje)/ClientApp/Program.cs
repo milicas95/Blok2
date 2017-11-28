@@ -47,7 +47,7 @@ namespace ClientApp
             else
             {
                 X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, "dkservice", "Servers");
-                EndpointAddress address = new EndpointAddress(new Uri("net.tcp://localhost:9999/Receiver"),
+                EndpointAddress address = new EndpointAddress(new Uri("net.tcp://localhost:9998/Receiver"),
                                               new X509CertificateEndpointIdentity(srvCert));
 
                 using (SSLHandshakeClient proxyshake = new SSLHandshakeClient(binding, address))
@@ -82,7 +82,7 @@ namespace ClientApp
                     do
                     {
                         Console.WriteLine("================================================");
-                        Console.WriteLine("Wellcome {0} chose your action:", clientCertCN);
+                        Console.WriteLine("Welcome {0} chose your action:", clientCertCN);
                         Console.WriteLine("To create new data base press 1");
                         Console.WriteLine("To delete exsisting data base press 2");
                         Console.WriteLine("To make new parameter in data base press 3");
@@ -111,7 +111,7 @@ namespace ClientApp
                                 continue;
                             case 3:
                                 DBParam dbp = new DBParam();
-                                string path1 = "C://Users//Administrator.DOMAINADMINS0//Desktop//Staviti na GIT//ServiceApp//bin//Debug";
+                                string path1 = "C://Users//Administrator.DOMAINADMINS0//Desktop//!//Vezba5 (resenje)//ServiceApp//bin//Debug//DataBase.txt";
                                 List<int> IDs = new List<int>();
                                 string[] lines = File.ReadAllLines(path1);
                                 for (int i = 0; i < lines.Count(); i++)
@@ -181,7 +181,7 @@ namespace ClientApp
                                 }
                                 continue;
                             case 4:
-                                string path2 = "C://Users//Administrator.DOMAINADMINS0//Desktop//Staviti na GIT//ServiceApp//bin//Debug";
+                                string path2 = "C://Users//Administrator.DOMAINADMINS0//Desktop//!//Vezba5 (resenje)//ServiceApp//bin//Debug//DataBase.txt";
                                 DBParam dbp1 = new DBParam();
                                 List<int> IDs1 = new List<int>();
 
@@ -245,12 +245,25 @@ namespace ClientApp
                                         Console.WriteLine("City");
                                         dbp1.City = Console.ReadLine();
                                         Console.WriteLine("Year");
-                                        dbp1.Year = Convert.ToInt32(Console.ReadLine());
+                                        int year;
+                                        string syear = Console.ReadLine();
+                                        while (!Int32.TryParse(syear, out year))
+                                        {
+                                            //Audit.AddFailed("User " + userName + " put wrong parameter for year.");     //ispis u Log fajl za unos losih parametara
+                                            Console.WriteLine("Error, wrong input for year");
+                                        }
+                                        dbp1.Year = year;
                                         Console.WriteLine("Month");
                                         dbp1.Month = Console.ReadLine();
                                         Console.WriteLine("Usage");
-                                        dbp1.ElEnergySpent = Convert.ToInt32(Console.ReadLine());
-                                        dbp1.CNT = counter;
+                                        int eUsage;
+                                        string seUsage = Console.ReadLine();
+                                        while (!Int32.TryParse(seUsage, out eUsage))
+                                        {
+                                            //Audit.AddFailed("User " + userName + " put wrong parameter for usage.");        //ispis u Log fajl za unos losih parametara
+                                            Console.WriteLine("Error, wrong input for usage");
+                                        }
+                                        dbp1.ElEnergySpent = eUsage;
                                         if (proxy.Edit(clientCertCN, dbp1))
                                         {
                                             Console.WriteLine("Database edited!");
@@ -265,6 +278,7 @@ namespace ClientApp
                                 }
                                 continue;
                             case 5:
+
                                 Console.WriteLine("What is the city?");
                                 string city = Console.ReadLine();
                                 int averageCity = proxy.AverageUsageInCity(city, clientCertCN);

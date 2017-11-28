@@ -7,7 +7,6 @@ using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using Manager;
 using System.Security.Principal;
-using Manager;
 
 namespace ClientApp
 {

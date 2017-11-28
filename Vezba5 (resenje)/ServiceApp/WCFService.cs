@@ -9,38 +9,81 @@ using System.Security.Principal;
 using System.IO;
 using DBparam;
 using System.ServiceModel;
+using Manager.SecurityManager;
+using System.Threading;
 
 namespace ServiceApp
 {
     
-    public class WCFService : IDatabaseManagement,ISSLHandshake
+    public class WCFService : ChannelFactory<ISecurityService>, ISecurityService, IDisposable, IDatabaseManagement, ISSLHandshake
     {
+        ISecurityService factory;
 
+        public WCFService(NetTcpBinding binding, string address) : base(binding, address)
+		{
+            factory = this.CreateChannel();
+        }
+
+        public WCFService(){ }
+        public bool Replicate()
+        {
+            try
+            {
+                return factory.Replicate();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error while Replicating: {0}", e.Message);
+                return false;
+            }
+        }
         # region SSL Handshake
         static byte[] session_key;
 
         public X509Certificate2 RequestSession()
         {
-            X509Certificate2 serverCertificate;
-            string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
-            serverCertificate = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, srvCertCN, "Servers");
-            //serverCertificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, srvCertCN, "Servers");
+            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
 
-            return serverCertificate;
+            if(principal.IsInRole(Permissions.Session.ToString()))
+            {
+                X509Certificate2 serverCertificate;
+                string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+                serverCertificate = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, srvCertCN, "Servers");
+                //serverCertificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, srvCertCN, "Servers");
+
+                //Audit succesfull
+
+                return serverCertificate;
+            }
+            else
+            {
+                //Audit failed
+            }
+            return null;
         }
 
         public bool SendSessionKey(byte[] encrypted_session_key)
         {
-            //byte[] sessionkey = null;
+            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
 
-            X509Certificate2 serverCertificate;
-            string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
-            serverCertificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, srvCertCN, "Servers");
+            if(principal.IsInRole(Permissions.Session.ToString()))
+            {
 
-            session_key = RSA_ASymm_Algorithm.RSADecrypt(encrypted_session_key, serverCertificate);
+                X509Certificate2 serverCertificate;
+                string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+                serverCertificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, srvCertCN, "Servers");
 
-            return true;
+                session_key = RSA_ASymm_Algorithm.RSADecrypt(encrypted_session_key, serverCertificate);
 
+                //Audit successfull
+
+                return true;
+            }
+            else
+            {
+                //Audit failed
+            }
+            return false;
         }
 
         public byte[] GetSessionKey()
@@ -50,20 +93,16 @@ namespace ServiceApp
 
         #endregion
 
-        // autorizacija ide samo kod pravljenja i brisanja datoteka !!!!!!
 
         public int AverageUsageInCity(string city, string userName)
         {
-            X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Readers");
-            //         Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);       //ispis da je autentifikovan korisnik
-            DBParam dbp = new DBParam();
+            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
 
-            string path = "DataBase.txt";
-            int totalUsage = 0;
-
-            if (cert != null)
+            if (principal.IsInRole(Permissions.Read.ToString()))
             {
-  //              Audit.CertificateSuccess();     //ispis u Log fajl da je ok certifikat
+                DBParam dbp = new DBParam();
+                string path = "DataBase.txt";
+                int totalUsage = 0;
 
                 try
                 {
@@ -100,10 +139,11 @@ namespace ServiceApp
                 }
 
                 return totalUsage;
+
             }
             else
             {
-         //       Audit.CertificateFailed();
+                //       Audit.CertificateFailed();
                 Console.WriteLine("Certificate is invalid");
                 return -1;
             }
@@ -111,16 +151,19 @@ namespace ServiceApp
 
         public int AverageUsageInRegion(string region, string userName)
         {
-            X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Readers");
+            //X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Readers");
             //         Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);       //ispis da je autentifikovan korisnik
-            DBParam dbp = new DBParam();
 
-            string path = "DataBase.txt";
-            int totalUsage = 0;
+            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
 
-            if (cert != null)
+
+            if (principal.IsInRole(Permissions.Read.ToString()))
             {
-//                Audit.CertificateSuccess();     //ispis u Log fajl da je ok certifikat
+                DBParam dbp = new DBParam();
+                string path = "DataBase.txt";
+                int totalUsage = 0;
+
+                //                Audit.CertificateSuccess();     //ispis u Log fajl da je ok certifikat
 
                 try
                 {
@@ -173,14 +216,17 @@ namespace ServiceApp
         {
             X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Readers");
             //           Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);       //ispis da je autentifikovan korisnik
-            DBParam dbp = new DBParam();
 
-            string path = "DataBase.txt";
-            string hs="";
+            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
 
-            if (cert != null)
+            if (principal.IsInRole(Permissions.Read.ToString()))
             {
-  //              Audit.CertificateSuccess();     //ispis u Log fajl da je ok certifikat
+                DBParam dbp = new DBParam();
+
+                string path = "DataBase.txt";
+                string hs = "";
+
+                //              Audit.CertificateSuccess();     //ispis u Log fajl da je ok certifikat
 
                 try
                 {
@@ -249,13 +295,14 @@ namespace ServiceApp
         {
             X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Writers");
             //    Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);       //ispis da je autentifikovan korisnik
-            string path = "DataBase.txt";
 
-            if (cert != null)
+            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
+
+            if (principal.IsInRole(Permissions.Write.ToString()))
             {
                 //   Audit.CertificateSuccess();     //ispis u Log fajl da je ok certifikat
                 //      Audit.ReadSuccess(database);        //ispis u Log fajl da je uspesno procitana (otvorena) datoteka
-
+                string path = "DataBase.txt";
                 try
                 {
                     StreamWriter sw;
@@ -265,6 +312,7 @@ namespace ServiceApp
                     }
                     sw.Close();
                     //         Audit.AddSuccess();         //ispis u Log fajlu da je dodat podatak u datoteku
+
                 }
                 catch (Exception e)
                 {
@@ -278,7 +326,7 @@ namespace ServiceApp
             else
             {
                 //           Audit.CertificateFailed();
-                Console.WriteLine("Certificate is invalid");
+                Console.WriteLine("User access is denied");
                 return false;
             }
         }
@@ -287,19 +335,22 @@ namespace ServiceApp
         {
             X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Writers");
             //       Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);       //ispis da je autentifikovan korisnik
-            string path = "DataBase.txt";
 
-            if (cert != null)
+            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
+
+            if (principal.IsInRole(Permissions.Write.ToString()))
             {
                 //            Audit.CertificateSuccess();     //ispis u Log fajl da je ok certifikat
+                string path = "DataBase.txt";
 
                 try
                 {
                     //                    Audit.ReadSuccess(database);        //ispis u Log fajl da je uspesno procitana (otvorena) datoteka
                     string[] text = File.ReadAllLines(path);
-                    text[dbp.CNT] = dbp.Id + "/" + dbp.Region + "/" + dbp.City + "/" + dbp.Month + "/" + dbp.ElEnergySpent;
+                    text[dbp.CNT] = dbp.Id + "/" + dbp.Region + "/" + dbp.City + "/" + dbp.Year + "/" + dbp.Month + "/" + dbp.ElEnergySpent;
                     File.WriteAllLines(path, text);
                     //       Audit.UpdateSuccess();
+                    
                 }
                  catch (Exception e)
                  {
@@ -313,7 +364,7 @@ namespace ServiceApp
              else
              {
                 //            Audit.CertificateFailed();
-                Console.WriteLine("Certificate is invalid");
+                Console.WriteLine("User access is denied");
                 return false;
             }
         }
@@ -322,10 +373,12 @@ namespace ServiceApp
         {
             X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Admins");
 
-            string path = "DataBase.txt";
+            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
 
-            if (cert != null)
+            if (principal.IsInRole(Permissions.Create.ToString()))
             {
+                string path = "DataBase.txt";
+
                 if (!File.Exists(path))
                 {
                     // Create a file to write to.
@@ -352,7 +405,7 @@ namespace ServiceApp
             else
             {
                 //Console.WriteLine("Certificate is invalid");
-                return "Certificate is invalid";
+                return "User access is denied";
             }
         }
 
@@ -360,10 +413,12 @@ namespace ServiceApp
         {
             X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Admins");
 
-            string path = "DataBase.txt";
+            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
 
-            if (cert != null)
+            if (principal.IsInRole(Permissions.Delete.ToString()))
             {
+                string path = "DataBase.txt";
+
                 if (File.Exists(path))
                 {
                     // Delete a file 
@@ -389,7 +444,7 @@ namespace ServiceApp
             else
             {
                 //Console.WriteLine("Certificate is invalid");
-                return "Certificate is invalid";
+                return "User acess is denied";
             }
         }
 

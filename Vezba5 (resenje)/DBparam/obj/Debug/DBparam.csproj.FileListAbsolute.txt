@@ -17,3 +17,17 @@ C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\DBparam\bin\Debug\DB
 C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\DBparam\obj\Debug\DBparam.csprojResolveAssemblyReference.cache
 C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\DBparam\obj\Debug\DBparam.dll
 C:\Users\Administrator.DOMAINADMINS0\Desktop\Staviti na GIT\DBparam\obj\Debug\DBparam.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Krjanje\DataKeep\Vezba5 (resenje)\DBparam\bin\Debug\DBparam.dll
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Krjanje\DataKeep\Vezba5 (resenje)\DBparam\bin\Debug\DBparam.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Krjanje\DataKeep\Vezba5 (resenje)\DBparam\obj\Debug\DBparam.dll
+C:\Users\Administrator.DOMAINADMINS0\Desktop\Krjanje\DataKeep\Vezba5 (resenje)\DBparam\obj\Debug\DBparam.pdb
+E:\!\Vezba5 (resenje)\DBparam\bin\Debug\DBparam.dll
+E:\!\Vezba5 (resenje)\DBparam\bin\Debug\DBparam.pdb
+E:\!\Vezba5 (resenje)\DBparam\obj\Debug\DBparam.csprojResolveAssemblyReference.cache
+E:\!\Vezba5 (resenje)\DBparam\obj\Debug\DBparam.dll
+E:\!\Vezba5 (resenje)\DBparam\obj\Debug\DBparam.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Vezba5 (resenje)\DBparam\bin\Debug\DBparam.dll
+C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Vezba5 (resenje)\DBparam\bin\Debug\DBparam.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Vezba5 (resenje)\DBparam\obj\Debug\DBparam.dll
+C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Vezba5 (resenje)\DBparam\obj\Debug\DBparam.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Vezba5 (resenje)\DBparam\obj\Debug\DBparam.csprojResolveAssemblyReference.cache

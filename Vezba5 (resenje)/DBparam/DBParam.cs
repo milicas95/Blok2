@@ -8,12 +8,6 @@ namespace DBparam
 {
     public class DBParam
     {
-        private int id;
-        private string region;
-        private string city;
-        private int year;
-        private string month;
-        private int elEnergySpent;
 
         public DBParam() { }
 
