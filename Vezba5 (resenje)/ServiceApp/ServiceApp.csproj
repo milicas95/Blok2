@@ -66,6 +66,10 @@
       <Project>{33da0622-6786-404b-9b42-1c355f9d1896}</Project>
       <Name>DBparam</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DES\DES.csproj">
+      <Project>{01018ba3-4862-4f6c-9317-5cb8e54a427c}</Project>
+      <Name>DES</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Manager\Manager.csproj">
       <Project>{DACD3DAD-1EBA-49B7-B405-DA736E9E0F99}</Project>
       <Name>Manager</Name>

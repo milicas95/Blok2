@@ -28,3 +28,13 @@ C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Blok2\Vezba5 (resenje)\ServiceRep
 C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Blok2\Vezba5 (resenje)\ServiceReplicator\obj\Debug\ServiceReplicator.csprojResolveAssemblyReference.cache
 C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Blok2\Vezba5 (resenje)\ServiceReplicator\obj\Debug\ServiceReplicator.exe
 C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Blok2\Vezba5 (resenje)\ServiceReplicator\obj\Debug\ServiceReplicator.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\aaaaa\Blok2\Vezba5 (resenje)\ServiceReplicator\bin\Debug\ServiceReplicator.exe.config
+C:\Users\Administrator.DOMAINADMINS0\Desktop\aaaaa\Blok2\Vezba5 (resenje)\ServiceReplicator\bin\Debug\ServiceReplicator.exe
+C:\Users\Administrator.DOMAINADMINS0\Desktop\aaaaa\Blok2\Vezba5 (resenje)\ServiceReplicator\bin\Debug\ServiceReplicator.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\aaaaa\Blok2\Vezba5 (resenje)\ServiceReplicator\bin\Debug\Contracts.dll
+C:\Users\Administrator.DOMAINADMINS0\Desktop\aaaaa\Blok2\Vezba5 (resenje)\ServiceReplicator\bin\Debug\DBparam.dll
+C:\Users\Administrator.DOMAINADMINS0\Desktop\aaaaa\Blok2\Vezba5 (resenje)\ServiceReplicator\bin\Debug\Contracts.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\aaaaa\Blok2\Vezba5 (resenje)\ServiceReplicator\bin\Debug\DBparam.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\aaaaa\Blok2\Vezba5 (resenje)\ServiceReplicator\obj\Debug\ServiceReplicator.csprojResolveAssemblyReference.cache
+C:\Users\Administrator.DOMAINADMINS0\Desktop\aaaaa\Blok2\Vezba5 (resenje)\ServiceReplicator\obj\Debug\ServiceReplicator.exe
+C:\Users\Administrator.DOMAINADMINS0\Desktop\aaaaa\Blok2\Vezba5 (resenje)\ServiceReplicator\obj\Debug\ServiceReplicator.pdb
