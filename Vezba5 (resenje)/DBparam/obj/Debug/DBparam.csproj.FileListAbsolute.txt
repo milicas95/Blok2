@@ -31,3 +31,7 @@ C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Vezba5 (resenje)\DBparam\bin\Debu
 C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Vezba5 (resenje)\DBparam\obj\Debug\DBparam.dll
 C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Vezba5 (resenje)\DBparam\obj\Debug\DBparam.pdb
 C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Vezba5 (resenje)\DBparam\obj\Debug\DBparam.csprojResolveAssemblyReference.cache
+C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Blok2\Vezba5 (resenje)\DBparam\bin\Debug\DBparam.dll
+C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Blok2\Vezba5 (resenje)\DBparam\bin\Debug\DBparam.pdb
+C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Blok2\Vezba5 (resenje)\DBparam\obj\Debug\DBparam.dll
+C:\Users\Administrator.DOMAINADMINS0\Desktop\!\Blok2\Vezba5 (resenje)\DBparam\obj\Debug\DBparam.pdb

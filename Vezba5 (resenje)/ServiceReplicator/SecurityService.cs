@@ -22,8 +22,8 @@ namespace ServiceReplicator
             Console.WriteLine(identity.Name.ToString());
 
             //Copy database.txt to another destination
-            string sourceDir = @"C:/Users/Administrator.DOMAINADMINS0/Desktop/!/Vezba5 (resenje)/ServiceApp/bin/Debug";
-            string backupDir = @"C:/Users/Administrator.DOMAINADMINS0/Desktop/!/Vezba5 (resenje)/ServiceReplicator/bin/Debug";
+            string sourceDir = @"C:/Users/Administrator.DOMAINADMINS0/Desktop/!/Blok2/Vezba5 (resenje)/ServiceApp/bin/Debug";
+            string backupDir = @"C:/Users/Administrator.DOMAINADMINS0/Desktop/!/Blok2/Vezba5 (resenje)/ServiceReplicator/bin/Debug";
 
             
             try

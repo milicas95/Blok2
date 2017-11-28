@@ -15,7 +15,7 @@ namespace ClientApp
 	{
         static byte[] session_key = null;
 
-        static void Main(string[] args)
+        static int Main(string[] args)
 		{
             Console.ReadLine();
 			/// Define the expected service certificate. It is required to establish cmmunication using certificates.
@@ -46,7 +46,7 @@ namespace ClientApp
             }
             else
             {
-                X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, "dkservice", "Servers");
+                X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, "dkservice");
                 EndpointAddress address = new EndpointAddress(new Uri("net.tcp://localhost:9998/Receiver"),
                                               new X509CertificateEndpointIdentity(srvCert));
 
@@ -59,6 +59,8 @@ namespace ClientApp
                     if (serverCert == null)
                     {
                         Console.WriteLine("Error with servers public key!");
+                        return -1;
+                        
                     }
 
                     session_key = RSA_ASymm_Algorithm.GenerateSessionKey();
@@ -67,12 +69,15 @@ namespace ClientApp
                     if (encrypted_session_key == null)
                     {
                         Console.WriteLine("Error with encryption of session key!");
+                        return -1;
+
                     }
 
                     bool result = proxyshake.SendSessionKey(encrypted_session_key);
                     if (result == false)
                     {
                         Console.WriteLine("Error with decryption of session key!");
+                        return -1;
                     }
                 }
 
@@ -111,7 +116,7 @@ namespace ClientApp
                                 continue;
                             case 3:
                                 DBParam dbp = new DBParam();
-                                string path1 = "C://Users//Administrator.DOMAINADMINS0//Desktop//!//Vezba5 (resenje)//ServiceApp//bin//Debug//DataBase.txt";
+                                string path1 = "C://Users//Administrator.DOMAINADMINS0//Desktop//!//Blok2//Vezba5 (resenje)//ServiceApp//bin//Debug//DataBase.txt";
                                 List<int> IDs = new List<int>();
                                 string[] lines = File.ReadAllLines(path1);
                                 for (int i = 0; i < lines.Count(); i++)
@@ -120,13 +125,14 @@ namespace ClientApp
                                     IDs.Add(Convert.ToInt32(separeted[0]));
                                 }
                                 Console.WriteLine("Enter ID: ");
-                                int id;
-                                string sid = Console.ReadLine();
-                                while (!Int32.TryParse(sid, out id))
+                                int id; 
+                                string sid;
+                                do
                                 {
-                                    //Audit.AddFailed("User " + userName + " put wrong parameter for id.");     //ispis u Log fajl za unos losih parametara
-                                    Console.WriteLine("Error, wrong input for ID");
+                                    sid = Console.ReadLine();
                                 }
+                                while (!Int32.TryParse(sid, out id));
+
                                 int find = 0;
                                 foreach (int i in IDs)
                                 {
@@ -145,23 +151,24 @@ namespace ClientApp
                                         dbp.City = Console.ReadLine();
                                         Console.WriteLine("Enter year: ");
                                         int year;
-                                        string syear = Console.ReadLine();
-                                        while (!Int32.TryParse(syear, out year))
+                                        string syear;
+                                        do
                                         {
-                                            //Audit.AddFailed("User " + userName + " put wrong parameter for year.");     //ispis u Log fajl za unos losih parametara
-                                            Console.WriteLine("Error, wrong input for year");
+                                            syear = Console.ReadLine();
                                         }
+                                        while (!Int32.TryParse(syear, out year));
                                         dbp.Year = year;
                                         Console.WriteLine("Enter month: ");
                                         dbp.Month = Console.ReadLine();
                                         Console.WriteLine("Enter usage: ");
                                         int eUsage;
-                                        string seUsage = Console.ReadLine();
-                                        while (!Int32.TryParse(seUsage, out eUsage))
+                                        string seUsage;
+                                        do
                                         {
-                                            //Audit.AddFailed("User " + userName + " put wrong parameter for usage.");        //ispis u Log fajl za unos losih parametara
-                                            Console.WriteLine("Error, wrong input for usage");
+                                            seUsage = Console.ReadLine();
                                         }
+                                        while (!Int32.TryParse(seUsage, out eUsage));
+
                                         dbp.ElEnergySpent = eUsage;
                                         if (proxy.Add(clientCertCN, dbp))
                                         {
@@ -173,7 +180,6 @@ namespace ClientApp
                                         }
                                         break;
                                     case 1:
-                                        //Audit.AddFailed("ID already exists.");     //ispis u Log fajl za unos losih parametara
                                         Console.WriteLine("ID exists!");
                                         break;
                                     default:
@@ -181,7 +187,7 @@ namespace ClientApp
                                 }
                                 continue;
                             case 4:
-                                string path2 = "C://Users//Administrator.DOMAINADMINS0//Desktop//!//Vezba5 (resenje)//ServiceApp//bin//Debug//DataBase.txt";
+                                string path2 = "C://Users//Administrator.DOMAINADMINS0//Desktop//!//Blok2//Vezba5 (resenje)//ServiceApp//bin//Debug//DataBase.txt";
                                 DBParam dbp1 = new DBParam();
                                 List<int> IDs1 = new List<int>();
 
@@ -206,7 +212,6 @@ namespace ClientApp
                                 string sid1 = Console.ReadLine();
                                 while (!Int32.TryParse(sid1, out id1))
                                 {
-                                    //Audit.EditFailed("User " + userName + " put wrong parameter for ID.");     //ispis u Log fajl za unos losih parametara
                                     Console.WriteLine("Error, wrong input for ID");
                                 }
                                 int find1 = 0;
@@ -220,7 +225,6 @@ namespace ClientApp
                                 switch (find1)
                                 {
                                     case 0:
-                                        //Audit.AddFailed("ID already exists.");     //ispis u Log fajl za unos losih parametara
                                         Console.WriteLine("ID doesn't exists!");
                                         break;
                                     case 1:
@@ -249,7 +253,6 @@ namespace ClientApp
                                         string syear = Console.ReadLine();
                                         while (!Int32.TryParse(syear, out year))
                                         {
-                                            //Audit.AddFailed("User " + userName + " put wrong parameter for year.");     //ispis u Log fajl za unos losih parametara
                                             Console.WriteLine("Error, wrong input for year");
                                         }
                                         dbp1.Year = year;
@@ -260,10 +263,10 @@ namespace ClientApp
                                         string seUsage = Console.ReadLine();
                                         while (!Int32.TryParse(seUsage, out eUsage))
                                         {
-                                            //Audit.AddFailed("User " + userName + " put wrong parameter for usage.");        //ispis u Log fajl za unos losih parametara
                                             Console.WriteLine("Error, wrong input for usage");
                                         }
                                         dbp1.ElEnergySpent = eUsage;
+                                        dbp1.CNT = counter;
                                         if (proxy.Edit(clientCertCN, dbp1))
                                         {
                                             Console.WriteLine("Database edited!");
@@ -312,6 +315,8 @@ namespace ClientApp
 
                 }
             }
-		}
+            return 0;
+        }
+
 	}
 }

@@ -9,8 +9,8 @@ namespace Manager
     public class Audit : IDisposable
     {
         private static EventLog customLog = null;
-        const string SourceName = "Manager.Audit";
-        const string LogName = "DataKeep";          //naziv naseg Log fajla u Windows Event Log
+        const string SourceName = "SecurityManager.Audit";
+        const string LogName = "MySecTest";          //naziv naseg Log fajla u Windows Event Log
 
         static Audit()
         {
@@ -197,32 +197,6 @@ namespace Manager
             else
             {
                 throw new ArgumentException(string.Format("Error while trying to write event with id {0} to event log", (int)AuditEventTypes.ReadDBFailed));
-            }
-        }
-
-        public static void CertificateSuccess()
-        {
-            if (customLog != null)
-            {
-                //poziva metodu AuditEvents da bi ispisao poruku u Log fajl
-                customLog.WriteEntry(string.Format(AuditEvents.CertificateSuccess), EventLogEntryType.SuccessAudit);
-            }
-            else
-            {
-                throw new ArgumentException(string.Format("Error while trying to write event with id {0} to event log", (int)AuditEventTypes.CertificateSuccess));
-            }
-        }
-
-        public static void CertificateFailed()
-        {
-            if (customLog != null)
-            {
-                //poziva metodu AuditEvents da bi ispisao poruku u Log fajl
-                customLog.WriteEntry(string.Format(AuditEvents.CertificateFailed), EventLogEntryType.Error);
-            }
-            else
-            {
-                throw new ArgumentException(string.Format("Error while trying to write event with id {0} to event log", (int)AuditEventTypes.CertificateFailed));
             }
         }
 

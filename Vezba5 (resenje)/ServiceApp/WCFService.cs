@@ -37,6 +37,7 @@ namespace ServiceApp
                 return false;
             }
         }
+        
         # region SSL Handshake
         static byte[] session_key;
 
@@ -48,8 +49,7 @@ namespace ServiceApp
             {
                 X509Certificate2 serverCertificate;
                 string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
-                serverCertificate = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, srvCertCN, "Servers");
-                //serverCertificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, srvCertCN, "Servers");
+                serverCertificate = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, srvCertCN);
 
                 //Audit succesfull
 
@@ -71,7 +71,7 @@ namespace ServiceApp
 
                 X509Certificate2 serverCertificate;
                 string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
-                serverCertificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, srvCertCN, "Servers");
+                serverCertificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, srvCertCN);
 
                 session_key = RSA_ASymm_Algorithm.RSADecrypt(encrypted_session_key, serverCertificate);
 
@@ -97,17 +97,21 @@ namespace ServiceApp
         public int AverageUsageInCity(string city, string userName)
         {
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
+            string path = "DataBase.txt";
 
             if (principal.IsInRole(Permissions.Read.ToString()))
             {
                 DBParam dbp = new DBParam();
-                string path = "DataBase.txt";
+
+                Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);
+
                 int totalUsage = 0;
 
                 try
                 {
                     string[] lines = File.ReadAllLines(path);
                     List<DBParam> wantedCity = new List<DBParam>();
+                    Audit.ReadSuccess(path);
 
                     for (int i = 0; i < lines.Count(); i++)
                     {
@@ -133,7 +137,6 @@ namespace ServiceApp
                 }
                 catch (Exception e)
                 {
-                    Audit.ReadFailed(path, "Exception was thrown");     //ispis u Log fajlu da korisnik nema pravo pisanja
                     Console.WriteLine("Exception was thrown:");
                     Console.WriteLine(e.Message);
                 }
@@ -143,34 +146,31 @@ namespace ServiceApp
             }
             else
             {
-                //       Audit.CertificateFailed();
-                Console.WriteLine("Certificate is invalid");
+                Audit.ReadFailed(path, "Access is denied!");
+                Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "Authorization failed.");
+                Console.WriteLine("User access is denied for function AverageUsageInCity");
                 return -1;
             }
         }
 
         public int AverageUsageInRegion(string region, string userName)
         {
-            //X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Readers");
-            //         Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);       //ispis da je autentifikovan korisnik
-
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
-
+            string path = "DataBase.txt";
 
             if (principal.IsInRole(Permissions.Read.ToString()))
             {
                 DBParam dbp = new DBParam();
-                string path = "DataBase.txt";
                 int totalUsage = 0;
 
-                //                Audit.CertificateSuccess();     //ispis u Log fajl da je ok certifikat
+                Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);
 
                 try
                 {
-   //                 Audit.ReadSuccess(path);        //ispis u Log fajl da je uspesno procitana (otvorena) datoteka
 
                     string[] lines = File.ReadAllLines(path);
                     List<DBParam> wantedReg = new List<DBParam>();
+                    Audit.ReadSuccess(path);
 
                     for (int i = 0; i < lines.Count(); i++)
                     {
@@ -197,7 +197,6 @@ namespace ServiceApp
                 }
                 catch (Exception e)
                 {
-  //                  Audit.ReadFailed(path,"Exception was thrown");     //ispis u Log fajlu da korisnik nema pravo pisanja
                     Console.WriteLine("Exception was thrown:");
                     Console.WriteLine(e.Message);
                 }
@@ -206,33 +205,31 @@ namespace ServiceApp
             }
             else
             {
-  //              Audit.CertificateFailed();
-                Console.WriteLine("Certificate is invalid");
+                Audit.ReadFailed(path, "Access is denied!");
+                Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "Authorization failed.");
+                Console.WriteLine("User access is denied for function AverageUsageInRegion");
                 return -1;
             }
         }
 
         public string HighestSpenderInRegion(string region, string userName)
         {
-            X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Readers");
-            //           Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);       //ispis da je autentifikovan korisnik
-
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
+            string path = "DataBase.txt";
 
             if (principal.IsInRole(Permissions.Read.ToString()))
             {
                 DBParam dbp = new DBParam();
+                Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);
 
-                string path = "DataBase.txt";
                 string hs = "";
 
-                //              Audit.CertificateSuccess();     //ispis u Log fajl da je ok certifikat
 
                 try
                 {
-//                    Audit.ReadSuccess(path);        //ispis u Log fajl da je uspesno procitana (otvorena) datoteka
-                    
+
                     string[] lines = File.ReadAllLines(path);
+                    Audit.ReadSuccess(path);
 
                     List<DBParam> wantedReg = new List<DBParam>();
 
@@ -276,7 +273,6 @@ namespace ServiceApp
                 }
                 catch (Exception e)
                 {
-  //                  Audit.ReadFailed(path, "Exception was thrown");     //ispis u Log fajlu da korisnik nema pravo pisanja
                     Console.WriteLine("Exception was thrown:");
                     Console.WriteLine(e.Message);
                 }
@@ -285,24 +281,22 @@ namespace ServiceApp
             }
             else
             {
-              //  Audit.CertificateFailed();
-                Console.WriteLine("Certificate is invalid");
-                return "You can't use this option";
+                Audit.ReadFailed(path, "Access is denied!");
+                Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "Authorization failed.");
+                Console.WriteLine("User access is denied for function HighestSpenderInRegion");
+                return "You don't have permission to use this function";
             }
         }
 
         public bool Add(string userName, DBParam dbp)
         {
-            X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Writers");
-            //    Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);       //ispis da je autentifikovan korisnik
-
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
+            string path = "DataBase.txt";
 
             if (principal.IsInRole(Permissions.Write.ToString()))
             {
-                //   Audit.CertificateSuccess();     //ispis u Log fajl da je ok certifikat
-                //      Audit.ReadSuccess(database);        //ispis u Log fajl da je uspesno procitana (otvorena) datoteka
-                string path = "DataBase.txt";
+                Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);
+
                 try
                 {
                     StreamWriter sw;
@@ -311,12 +305,11 @@ namespace ServiceApp
                         sw.WriteLine(dbp.Id + "/" + dbp.Region + "/" + dbp.City + "/" + dbp.Year + "/" + dbp.Month + "/" + dbp.ElEnergySpent);
                     }
                     sw.Close();
-                    //         Audit.AddSuccess();         //ispis u Log fajlu da je dodat podatak u datoteku
+                    Audit.AddSuccess();
 
                 }
                 catch (Exception e)
                 {
-                    //               Audit.AddFailed("Exception was thrown");     //ispis u Log fajlu da korisnik nema pravo pisanja
                     Console.WriteLine("Exception was thrown:");
                     Console.WriteLine(e.Message);
                 }
@@ -325,36 +318,31 @@ namespace ServiceApp
             }
             else
             {
-                //           Audit.CertificateFailed();
-                Console.WriteLine("User access is denied");
+                Audit.AddFailed("Access is denied!");
+                Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "Authorization failed.");
+                Console.WriteLine("User access is denied for function Add");
                 return false;
             }
         }
 
         public bool Edit(string userName, DBParam dbp)
         {
-            X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Writers");
-            //       Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);       //ispis da je autentifikovan korisnik
-
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
+            string path = "DataBase.txt";
 
             if (principal.IsInRole(Permissions.Write.ToString()))
             {
-                //            Audit.CertificateSuccess();     //ispis u Log fajl da je ok certifikat
-                string path = "DataBase.txt";
+                Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);
 
                 try
                 {
-                    //                    Audit.ReadSuccess(database);        //ispis u Log fajl da je uspesno procitana (otvorena) datoteka
                     string[] text = File.ReadAllLines(path);
                     text[dbp.CNT] = dbp.Id + "/" + dbp.Region + "/" + dbp.City + "/" + dbp.Year + "/" + dbp.Month + "/" + dbp.ElEnergySpent;
                     File.WriteAllLines(path, text);
-                    //       Audit.UpdateSuccess();
-                    
+                    Audit.UpdateSuccess();
                 }
-                 catch (Exception e)
+                catch (Exception e)
                  {
-                 //              Audit.UpdateFailed("Exception was thrown");     //ispis u Log fajlu da korisnik nema pravo pisanja
                     Console.WriteLine("Exception was thrown: ");
                     Console.WriteLine(e.Message);
                  }
@@ -363,21 +351,21 @@ namespace ServiceApp
              }
              else
              {
-                //            Audit.CertificateFailed();
-                Console.WriteLine("User access is denied");
+                Audit.UpdateFailed("Access is denied!");
+                Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "Authorization failed.");
+                Console.WriteLine("User access is denied for function Edit");
                 return false;
             }
         }
 
         public string CreateDatabase(string userName)
         {
-            X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Admins");
-
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
+            string path = "DataBase.txt";
 
             if (principal.IsInRole(Permissions.Create.ToString()))
             {
-                string path = "DataBase.txt";
+                Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);
 
                 if (!File.Exists(path))
                 {
@@ -386,6 +374,7 @@ namespace ServiceApp
                     {
                         var myFile=File.CreateText(path);
                         myFile.Close();
+                        Audit.CreateSuccess(path);
                         //Console.WriteLine("Successfuly created new database!");
                         return "Successfuly created new database!";
                     }
@@ -398,26 +387,27 @@ namespace ServiceApp
                 }
                 else
                 {
+                    Audit.CreateFailed(path, "Database already exists!");
                     //Console.WriteLine("Database already exists");
                     return "Database already exists";
                 }
             }
             else
             {
-                //Console.WriteLine("Certificate is invalid");
-                return "User access is denied";
+                Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "Authorization failed.");
+                Console.WriteLine("User access is denied for function Create");
+                return "You don't have permission to use this function";
             }
         }
 
         public string DeleteDatabase(string userName)
         {
-            X509Certificate2 cert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, userName, "Admins");
-
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
+            string path = "DataBase.txt";
 
             if (principal.IsInRole(Permissions.Delete.ToString()))
             {
-                string path = "DataBase.txt";
+                Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);
 
                 if (File.Exists(path))
                 {
@@ -425,6 +415,7 @@ namespace ServiceApp
                     try
                     {
                         File.Delete(path);
+                        Audit.DeleteSuccess(path);
                         //Console.WriteLine("Successfuly deleted database!");
                         return "Successfuly deleted database!";
                     }
@@ -437,14 +428,16 @@ namespace ServiceApp
                 }
                 else
                 {
+                    Audit.DeleteFailed(path, "Database doesn't exist!");
                     //Console.WriteLine("Database already exists");
                     return "Database doesn't exists";
                 }
             }
             else
             {
-                //Console.WriteLine("Certificate is invalid");
-                return "User acess is denied";
+                Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "Authorization failed.");
+                Console.WriteLine("User access is denied for function Delete");
+                return "You don't have permission to use this function";
             }
         }
 

@@ -19,7 +19,7 @@ namespace ServiceReplicator
             bindingReplicator.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
             bindingReplicator.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
 
-            string address = "net.tcp://localhost:8888/SecurityService";
+            string address = "net.tcp://localhost:9997/SecurityService";
 
             ServiceHost host = new ServiceHost(typeof(SecurityService));
             host.AddServiceEndpoint(typeof(ISecurityService), bindingReplicator, address);

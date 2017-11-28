@@ -21,9 +21,7 @@ namespace Manager
         UpdateEntitySuccess = 9,
         UpdateEntityFailed = 10,
         ReadDBSuccess=11,
-        ReadDBFailed=12,
-        CertificateSuccess=13,
-        CertificateFailed=14
+        ReadDBFailed=12
     }
 
     public class AuditEvents
@@ -151,20 +149,6 @@ namespace Manager
             }
         }
 
-        public static string CertificateSuccess
-        {
-            get
-            {
-                return ResourceMgr.GetString(AuditEventTypes.CertificateSuccess.ToString());
-            }
-        }
-
-        public static string CertificateFailed
-        {
-            get
-            {
-                return ResourceMgr.GetString(AuditEventTypes.CertificateFailed.ToString());
-            }
-        }
+        
     }
     }

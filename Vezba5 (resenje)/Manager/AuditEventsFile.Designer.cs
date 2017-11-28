@@ -70,29 +70,11 @@ namespace Manager {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Entity successfully added..
+        ///   Looks up a localized string similar to Entity added..
         /// </summary>
         internal static string AddEntitySuccess {
             get {
                 return ResourceManager.GetString("AddEntitySuccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Certificate is invalid..
-        /// </summary>
-        internal static string CertificateFailed {
-            get {
-                return ResourceManager.GetString("CertificateFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Certificate is valid..
-        /// </summary>
-        internal static string CertificateSuccess {
-            get {
-                return ResourceManager.GetString("CertificateSuccess", resourceCulture);
             }
         }
         
@@ -133,7 +115,7 @@ namespace Manager {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reading database {0} failed. Reason {1}..
+        ///   Looks up a localized string similar to Database {0} can&apos;t be read. Reason {0}..
         /// </summary>
         internal static string ReadDBFailed {
             get {
@@ -142,7 +124,7 @@ namespace Manager {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Database {0} successfully read..
+        ///   Looks up a localized string similar to Database {0} has been read..
         /// </summary>
         internal static string ReadDBSuccess {
             get {
@@ -151,7 +133,7 @@ namespace Manager {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Updating entity failed. Reason {0}..
+        ///   Looks up a localized string similar to Editing entity failed. Reason {0}..
         /// </summary>
         internal static string UpdateEntityFailed {
             get {

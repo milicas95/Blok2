@@ -28,7 +28,7 @@ namespace ServiceApp
             WindowsIdentity wId = WindowsIdentity.GetCurrent();
             Console.WriteLine(wId.Name.ToString());
 
-            string addressReplicator = "net.tcp://localhost:8888/SecurityService";
+            string addressReplicator = "net.tcp://localhost:9997/SecurityService";
 
             /// srvCertCN.SubjectName should be set to the service's username. .NET WindowsIdentity class provides information about Windows user running the given process
             Console.ReadLine();
@@ -72,7 +72,7 @@ namespace ServiceApp
             if (found)
             {
                 ///Set appropriate service's certificate on the host. Use CertManager class to obtain the certificate based on the "srvCertCN"
-                host.Credentials.ServiceCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, srvCertCN, groupName);
+                host.Credentials.ServiceCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, srvCertCN);
                 /// host.Credentials.ServiceCertificate.Certificate = CertManager.GetCertificateFromFile("WCFService.pfx");
                 
                 try
